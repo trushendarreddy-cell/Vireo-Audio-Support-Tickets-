@@ -1,27 +1,27 @@
 # Memorandum
 
 **To:** Priya Raman, Head of Customer Experience, Vireo Audio  
-**From:** Senior CX Data & AI Engineering Team  
+**From:** Rushendar Reddy  
 **Date:** 27 September 2026  
 **Subject:** Operational Review: Customer Complaint Digest & Fair Agent Leaderboard  
 
 ---
 
 ### Executive Takeaway
-We have built a lightweight, auditable local analysis tool that automatically generates your **Weekly Complaint Digest** and a **Fair Agent Leaderboard** from Vireo's 18 months of support records (11,875 unique tickets). 
+I built a small local analysis tool that turns Vireo's 18 months of support records into a **Weekly Complaint Digest** and a **Fair Agent Leaderboard**. After cleaning the data, there are 11,875 unique tickets. 
 
-Our primary operational focus is eliminating **preventable repeat customer contacts**:
-* **The Opportunity:** Over 18 months, **27.0% of all tickets** (3,201 tickets) were repeat inquiries about the same order within 30 days (**16.1% / 1,910 tickets within 14 days**), consuming **₹8.58 lakh** (₹1.43 lakh/quarter) in avoidable contact costs.
-* **Target Impact:** Lowering same-order repeat contacts from 27% to 22% (or 16% to 12% on a 14-day window) frees up **₹22,000 to ₹35,000+ per quarter** on historical volume, and **over ₹1.0 lakh to ₹1.2 lakh per quarter** at your current operating scale of 650 tickets/week.
-* **Zero Software Run Cost:** The deterministic analysis runs locally in under 1 second with **₹0.00 in per-ticket AI/API fees**. The optional AI analyst can use cloud providers, but the core digest and leaderboard do not depend on them.
+The main number I would watch is **repeat customer contact**:
+* **The Opportunity:** Over 18 months, **27.0% of all tickets** (3,201 tickets) were repeat inquiries about the same order within 30 days (**16.1% / 1,910 tickets within 14 days**), with a modeled handling cost of **₹8.58 lakh** over the 18-month period.
+* **Target Impact:** At the stated 650 tickets/week planning volume, moving the 30-day repeat rate from 27% to 22% means about 422.5 fewer repeat contacts per quarter. At ₹290 per contact, that is a modeled **₹122,525 per quarter**.
+* **Zero Software Run Cost:** The core analysis runs locally and uses **₹0 in API fees**. The AI analyst is optional and can use cloud models. The optional AI analyst can use cloud providers, but the core digest and leaderboard do not depend on them.
 
 ---
 
-### What Customers Are Complaining About (Weekly Digest Findings)
-Across recent complete operating weeks, Vireo averaged ~189 tickets/week (43.5% Chat, 32.1% Email, 14.3% Voice, 10.1% Social). Our text mining uncovered a critical, previously hidden product bug:
+### What the data says customers are complaining about
+Across recent complete operating weeks, Vireo averaged ~189 tickets/week (43.5% Chat, 32.1% Email, 14.3% Voice, 10.1% Social). The text analysis found a product/support issue worth checking:
 
 1. **The "Cancellation UI" Blunder (High-Impact Quick Win):**  
-   Nearly **1 in 5 tickets (19.2%)** filed under the catch-all category *"Other"* are customers desperately trying to cancel an accidental order or fix a delivery address right after checkout. They report that the *“cancel button is greyed out”* or *“editing in app failed.”* Because the self-service button fails, customers flood chat and email queues to stop shipments before dispatch. Fixing this button in the app/website will immediately remove dozens of high-friction contacts every week.
+   **324 tickets, or 19.2% of the "Other" category,** match a cancellation/address-editing problem. They report that the *“cancel button is greyed out”* or *“editing in app failed.”* Customers describe the cancel button being greyed out or address editing failing. I would reproduce this flow before estimating how many contacts a fix would remove.
 2. **Delivery & Tracking Delays (22.5% of recent volume):**  
    Couriers stalling at hubs with stagnant tracking pages remains our largest raw category.
 3. **Payment & Invoice Glitches (~12%):**  
@@ -45,23 +45,23 @@ Support Policy v3.2 automatically issues a **₹350 store credit** to customers 
 
 ---
 
-### Agent Leaderboard: Keeping It Fair and Actionable
-Per your directive, the leaderboard is retained and fully auditable, but structured to prevent perverse incentives:
+### Agent leaderboard
+I did not use one ranking rule for all 44 agents:
 1. **Tier 1 (Frontline, Logistics, Billing, Returns Desk):**  
-   Agents are ranked **within their functional teams** on balanced productivity (tickets attended per active week), while displaying their SLA breach rate, CSAT, repeat-contact rate, and transfer rate. This ensures part-time or recently joined agents are evaluated fairly against full-time peers.
+   Agents are ranked **within their functional teams** on balanced productivity (tickets attended per active week), while displaying their SLA breach rate, CSAT, repeat-contact rate, and transfer rate. This keeps agents in different teams from being compared as if they were doing the same work.
 2. **Tier 2 (Escalations & Warranty):**  
    As Neha correctly warned, warranty cases require multi-touch physical RMA inspections and part sourcing. Evaluating Tier 2 on raw closed volume would make top technicians look idle. Tier 2 agents are **ranked strictly by Resolution Speed in Days** (averaging 5.3 to 6.1 days), with case count displayed purely as contextual workload.
 
 ---
 
-### Key Data Caveats You Should Know
+### Things worth knowing about the data
 * **Migration Artifacts:** We resolved 653 duplicated records between the old Freshdesk and the current helpdesk by retaining the live helpdesk records and shifting legacy event-log UTC timestamps by +5.5 hours to IST.
 * **CSAT Truth:** In the old system, an uncompleted survey was recorded as `0`. We cleaned these out per policy; Vireo’s true average CSAT is **3.32 across 5,269 valid responses (44.4% response rate)**.
 * **Volume Discrepancy:** The historical export averaged ~189 tickets/week, whereas your forward planning scenario assumes 650 tickets/week. All historical findings are grounded in verified data; financial models scale directly with volume.
 
 ---
 
-### Recommended Next Actions
+### What I would check next
 1. **Investigate the cancellation/address-editing flow:** The analysis found 324 tickets matching this friction pattern. Reproduce the checkout failure in the product flow and quantify the avoidable contact reduction before estimating savings.
 2. **Review email first-response coverage:** Email has an 11.6% SLA breach rate in the historical data. Test whether peak-hour queue balancing can reduce breaches before committing staffing changes.
 3. **Use the weekly digest as a review input:** Review emerging firmware, courier, payment and product-friction themes each week and track whether the repeat-contact and SLA metrics move after interventions.
