@@ -57,7 +57,7 @@ python run.py
 ## 3. Business Outcome & Verified Analytical Baselines
 
 ### Business goal
-Use the tool to reduce **30-day same-order repeat contacts from 27.0% to 22.0%** at Vireo's stated operating volume of **650 tickets/week**. That is a 5 percentage-point reduction, or about **422 fewer repeat contacts per quarter**. At the policy's blended contact cost of **₹290**, the modeled capacity/cost opportunity is **₹122,500 per quarter** (422 × ₹290 ≈ ₹122,380; using the exact 5% × 650 × 52/4 calculation gives ₹122,525). This is a target for operational improvement, not a claim that the tool itself has already caused the reduction.
+Use the tool to reduce **30-day same-order repeat contacts from 27.0% to 22.0%** at Vireo's stated operating volume of **650 tickets/week**. That is a A 5 percentage-point reduction represents **422.5 fewer repeat contacts per quarter on the planning model** (about 423). At the policy's blended contact cost of **₹290**, the modeled capacity/cost opportunity is **₹122,525 per quarter**. This is a target for operational improvement, not a claim that the tool itself has already caused the reduction.
 
 ### Verified analytical baselines
 
