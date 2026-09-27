@@ -8,7 +8,7 @@
 ### [0:00 – 0:25] 1. Introduction & What Was Built
 *(Action: Show project directory structure in VS Code: `run.py`, `src/`, `output/`, `data/`)*
 
-> "Hi everyone. Today I'm presenting the complete, production-ready CX analytics and digest engine built for Priya Raman, Head of Customer Experience at Vireo Audio.
+> "Hi everyone. Today I'm presenting the auditable CX analytics and digest tool built for Priya Raman, Head of Customer Experience at Vireo Audio.
 > 
 > Priya requested two things: a weekly customer complaint digest, and an agent leaderboard based on closed tickets, while Finance explicitly mandated zero surprise model bills. 
 > 
@@ -32,7 +32,7 @@
 > 
 > One major discovery we surfaced is a hidden product bug: nearly 20% of tickets categorized under 'Other' are customers trying to cancel an accidental order or fix a shipping address right after checkout, complaining that the 'cancel button is greyed out' or 'in-app edit failed.' 
 > 
-> Because this self-service UI fails, dozens of customers per week flood the chat and email queues to intercept shipments before dispatch. Fixing this button in the app provides an immediate, zero-cost contact reduction win."
+> Because this self-service UI fails, dozens of customers per week flood the chat and email queues to intercept shipments before dispatch. This is a concrete product issue to reproduce and fix; the dataset shows the contact pattern, but not the exact post-fix reduction."
 
 ---
 
@@ -68,4 +68,4 @@
 > 
 > Reducing repeat contacts by just 5 percentage points at Vireo's operating scale of 650 tickets per week frees up over ₹1.2 lakh per quarter in contact-handling capacity, alongside ₹61,000 per quarter in SLA credit savings.
 > 
-> Everything is fully documented, tested, and ready for clean-machine deployment on Monday. Thank you."
+> The core pipeline is documented and validated; the web app and optional AI analyst are presentation layers around the deterministic source of truth. Thank you."
