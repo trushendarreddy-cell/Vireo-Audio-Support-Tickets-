@@ -199,11 +199,13 @@ Some important corrections/decisions were:
 
 - not using arbitrary order matching;
 - not using an LLM for the main calculations;
+- not presenting the cancellation/address-editing pattern as a confirmed product root cause or guaranteed savings;
 - not combining all agents into one score;
 - correcting the legacy timestamp handling;
 - treating the repeat-contact metric as a proxy rather than a confirmed root-cause metric;
 - leaving ambiguous tickets unresolved;
-- removing extra documentation that made the project look more complicated than the actual work.
+- removing extra documentation that made the project look more complicated than the actual work;
+- replacing hardcoded frontend examples with values returned by the verified analysis where possible.
 
 This was important because an AI can produce something that looks reasonable while still being wrong for the actual data.
 
