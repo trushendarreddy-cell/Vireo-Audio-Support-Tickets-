@@ -109,6 +109,118 @@ I also manually checked the cancellation/address-editing theme on **50 tickets**
 
 The validation is meant to catch calculation mistakes and bad assumptions before the numbers reach the dashboard.
 
+## AI used during development
+
+I used **Google Antigravity/Gemini** and **GLM 5.3 Flash through Freebuff AI**.
+
+I used different AI tools for different parts of the work instead of expecting one model to do everything.
+
+### Google Antigravity / Gemini
+
+I mainly used it when I wanted to work directly on the project and see changes across the codebase.
+
+I used it for:
+
+- understanding the existing project structure;
+- building and changing the backend/frontend;
+- connecting the analysis to the web app;
+- debugging issues;
+- testing flows;
+- cleaning up UI and code when something was not working.
+
+The useful part was being able to give it the project context and ask it to make a change, then check the actual result myself.
+
+### GLM 5.3 Flash through Freebuff AI
+
+I used GLM more as a second pair of eyes and for faster iterations.
+
+I used it for:
+
+- reading the supplied task files and understanding the requirements;
+- checking whether the product matched the brief;
+- exploring the CSV data and possible metrics;
+- looking for edge cases;
+- reviewing calculations and assumptions;
+- checking the final README/memo;
+- asking it to review the product as if it were the client;
+- generating focused prompts when I wanted another AI tool to perform a specific change.
+
+I did not just accept the first answer. I kept giving it the actual files/context and asking it to verify things against the data.
+
+### What my prompts were trying to do
+
+The prompts were mostly practical rather than asking the AI to build the whole project and trusting whatever came back.
+
+A typical workflow was:
+
+**1. Give the AI the actual task and files**
+
+I first gave it the client brief, README/email context and data files so it knew what the task was actually asking.
+
+**2. Ask it to inspect before changing**
+
+For example, I would ask it to inspect the current code/data and tell me what was already there, what was missing and what could be wrong.
+
+**3. Give a specific change**
+
+Instead of saying make it better, I would ask for a concrete change such as checking duplicate handling, fixing a metric, changing a leaderboard rule, improving a page, or validating a particular calculation.
+
+**4. Make it verify its own work**
+
+After changes, I asked it to run/check the relevant files, compare the output with the source data and look for edge cases.
+
+**5. Challenge the result**
+
+If an answer looked too convenient, I asked the AI to prove where the number came from or explain the assumption. This is how I caught things that I did not want to blindly keep.
+
+### Examples of the kind of prompts I used
+
+I used prompts along these lines:
+
+> Read all the task files first. Do not change anything yet. Tell me what the client actually asked for, what is required for submission, and what is optional.
+
+> Inspect the ticket data and find a business metric that can actually be calculated from the available fields. Show the formula, the rows used, and the limitations. Do not invent a metric.
+
+> Verify this calculation against the raw CSV. If the join is ambiguous, do not guess. Tell me exactly which rows are affected.
+
+> Review the current product against the original brief. Check what is missing, what is unnecessary, and what could be misleading to the client.
+
+> Do a final product check. Verify the calculations, edge cases, frontend flow, README and client memo. Do not just say it looks good; point out anything that could fail.
+
+> Look at the frontend as a real user would. Tell me what is confusing, what looks unfinished, and what should be changed without adding unnecessary features.
+
+The exact wording changed during the work. The important part was that I kept the prompts tied to the actual files and the task rather than asking the model to make generic improvements.
+
+## What AI got wrong or what I did not keep
+
+I did not keep everything the models suggested.
+
+Some important corrections/decisions were:
+
+- not using arbitrary order matching;
+- not using an LLM for the main calculations;
+- not combining all agents into one score;
+- correcting the legacy timestamp handling;
+- treating the repeat-contact metric as a proxy rather than a confirmed root-cause metric;
+- leaving ambiguous tickets unresolved;
+- removing extra documentation that made the project look more complicated than the actual work.
+
+This was important because an AI can produce something that looks reasonable while still being wrong for the actual data.
+
+## Why I used more than one AI
+
+I found it useful to have different models look at the same work.
+
+One model could make a code change, while another could review the result or question an assumption. I could then check both against the actual files and data.
+
+The final decision was mine, not the model's.
+
+## Cost
+
+Paid API spend during development: **₹0**.
+
+The core analysis also runs without a paid API. The AI analyst is optional.
+
 ## What I left out
 
 I did not spend the limited task time on:
@@ -120,30 +232,6 @@ I did not spend the limited task time on:
 - production authentication and deployment.
 
 Those things could be added later, but they were not necessary to answer the main question in this task.
-
-## AI used during development
-
-I used **Google Antigravity/Gemini** and **GLM 5.3 Flash through Freebuff AI**.
-
-I used them for things like:
-
-- exploring the data;
-- generating and refactoring code;
-- debugging;
-- checking edge cases;
-- testing the AI analyst;
-- thinking through different ways to calculate the metrics.
-
-I did not keep every suggestion. I changed or removed approaches when they did not match the data or the task.
-
-Some important examples were:
-
-- not using arbitrary order matching;
-- not using an LLM for the main calculations;
-- not combining all agents into one score;
-- correcting the legacy timestamp handling.
-
-Paid API spend during development: **₹0**.
 
 ## Final product scope
 
