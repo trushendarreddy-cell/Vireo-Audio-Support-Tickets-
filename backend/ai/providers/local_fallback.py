@@ -22,9 +22,9 @@ class LocalFallbackProvider(BaseLLMProvider):
         if any(w in q_lower for w in ["repeat", "multiple", "again", "frequency"]):
             return {
                 "answer": (
-                    "Repeat contacts rise sharply from 16.08% at 14 days to 26.96% at 30 days. "
-                    "Unresolved delivery status, payment reconciliation lag, and Bluetooth connectivity "
-                    "re-contacts drive 3,201 total repeat tickets costing INR 858,520."
+                    "Repeat contacts rise from 16.08% at 14 days to 26.96% at 30 days. "
+                    "There are 3,201 same-order repeat contacts in the 30-day window, with "
+                    "channel-specific handling costs totaling INR 858,520."
                 ),
                 "analysis": (
                     "Expanding the measurement window from 14 to 30 days reveals 1,291 additional repeat contacts "
@@ -49,14 +49,13 @@ class LocalFallbackProvider(BaseLLMProvider):
         elif any(w in q_lower for w in ["cancel", "address", "button", "grey"]):
             return {
                 "answer": (
-                    "324 tickets (19.2% of the 'Other' category) stem from a critical checkout UI flaw: "
-                    "the cancel button is greyed out and address editing in-app fails immediately after order placement."
+                    "324 tickets (19.2% of the 'Other' category) match cancellation/address-editing text patterns, "
+                    "including reports that the cancel button is unavailable or address editing fails."
                 ),
                 "analysis": (
-                    "Customer verbatim messages reveal desperate requests to cancel accidental orders or correct delivery "
-                    "addresses within minutes of checkout. Because the self-service button fails, customers flood Voice and "
-                    "Chat queues. Introducing a 30-minute self-service grace period will eliminate ~20–30 high-friction "
-                    "contacts per week immediately."
+                    "Customer messages include requests to cancel accidental orders or correct delivery addresses shortly after checkout. "
+                    "The ticket text does not prove the exact product cause or how many contacts a product change would prevent. "
+                    "A useful next step is to reproduce the flow and measure the effect of any fix."
                 ),
                 "evidence": [
                     "324 tickets matched cancellation/address UI friction patterns",
@@ -103,7 +102,7 @@ class LocalFallbackProvider(BaseLLMProvider):
                 "analysis": (
                     "Support Policy v3.2 §8 notes that legacy Freshdesk exports encoded unreturned customer surveys as 0. "
                     "Failing to exclude these zeros falsely depresses CSAT to ~1.47. Properly filtered, the score is 3.32, "
-                    "with delivery delays and unresolved replacement tickets contributing the majority of ratings ≤ 2."
+                    "The filtered score excludes legacy CSAT=0 values because those represent no response rather than a 0/5 rating."
                 ),
                 "evidence": [
                     "5,269 valid CSAT ratings (1–5 scale), yielding 3.32 average",
