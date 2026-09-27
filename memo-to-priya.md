@@ -8,12 +8,12 @@
 ---
 
 ### Executive Takeaway
-We have built a zero-maintenance, local analysis tool that automatically generates your **Weekly Complaint Digest** and a **Fair Agent Leaderboard** from Vireo's 18 months of support records (11,875 unique tickets). 
+We have built a lightweight, auditable local analysis tool that automatically generates your **Weekly Complaint Digest** and a **Fair Agent Leaderboard** from Vireo's 18 months of support records (11,875 unique tickets). 
 
 Our primary operational focus is eliminating **preventable repeat customer contacts**:
 * **The Opportunity:** Over 18 months, **27.0% of all tickets** (3,201 tickets) were repeat inquiries about the same order within 30 days (**16.1% / 1,910 tickets within 14 days**), consuming **₹8.58 lakh** (₹1.43 lakh/quarter) in avoidable contact costs.
 * **Target Impact:** Lowering same-order repeat contacts from 27% to 22% (or 16% to 12% on a 14-day window) frees up **₹22,000 to ₹35,000+ per quarter** on historical volume, and **over ₹1.0 lakh to ₹1.2 lakh per quarter** at your current operating scale of 650 tickets/week.
-* **Zero Software Run Cost:** The tool runs 100% locally in under 1 second with **₹0.00 in per-ticket AI/API fees**, eliminating any risk of surprise budget overruns.
+* **Zero Software Run Cost:** The deterministic analysis runs locally in under 1 second with **₹0.00 in per-ticket AI/API fees**. The optional AI analyst can use cloud providers, but the core digest and leaderboard do not depend on them.
 
 ---
 
@@ -62,6 +62,6 @@ Per your directive, the leaderboard is retained and fully auditable, but structu
 ---
 
 ### Recommended Next Actions
-1. **P0 Engineering Fix on Order Cancellation Button:** Instruct the web/mobile app engineering team to fix the greyed-out cancellation button and address editor within the 1-hour post-purchase window. This single fix can immediately eliminate ~20–30 contacts per week.
-2. **Email First-Response Queue Rebalancing:** Reallocate 2 floating agents during peak daytime hours to clear the email backlog, cutting the 11.6% email SLA breach rate and saving up to ₹25,000/quarter in store credits.
-3. **Weekly CX Huddle Adoption:** Use the Markdown Weekly Digest in Monday morning leadership reviews to monitor emerging firmware/courier spikes before they snowball into social media complaints.
+1. **Investigate the cancellation/address-editing flow:** The analysis found 324 tickets matching this friction pattern. Reproduce the checkout failure in the product flow and quantify the avoidable contact reduction before estimating savings.
+2. **Review email first-response coverage:** Email has an 11.6% SLA breach rate in the historical data. Test whether peak-hour queue balancing can reduce breaches before committing staffing changes.
+3. **Use the weekly digest as a review input:** Review emerging firmware, courier, payment and product-friction themes each week and track whether the repeat-contact and SLA metrics move after interventions.
