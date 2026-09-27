@@ -149,9 +149,9 @@ def get_metrics():
             "teams": op["team_counts"]
         },
         "key_insight": (
-            "19.2% of customer tickets categorized as 'Other' stem from an app/web UI flaw where the "
-            "'cancel button is greyed out' or address edits fail immediately after checkout. "
-            "Fixing this self-service button will eliminate ~20–30 high-friction contacts per week."
+            "324 tickets in the 'Other' category match cancellation/address-editing text patterns, "
+            "including reports of a disabled cancel button or failed address edits. "
+            "This is a text pattern, not proof of a specific product bug or a measured savings amount."
         )
     }
 
