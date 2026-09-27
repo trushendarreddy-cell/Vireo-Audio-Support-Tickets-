@@ -1,6 +1,6 @@
-# Vireo Audio Support Desk — Development & Prompt Log
+# Vireo Audio Support Desk — Development Log
 
-This document records the engineering decisions, prompts used during development, AI contributions, corrections, discarded approaches, and final architectural choices.
+This is a record of how I built the project, what AI helped with, what I changed, and what I threw away.
 
 ---
 
@@ -14,7 +14,7 @@ This document records the engineering decisions, prompts used during development
 
 ## 2. Chronological Log of Prompts & Development Iterations
 
-### Iteration 1: Initial Discovery & Authority Grounding
+### 1. First pass: understand the data and policy
 * **Prompt Received:** Task specification and business context for Priya Raman (Head of CX), Neha Kulkarni (Ops Manager), Sameer Qureshi (IT), and Arjun Mehta (Finance Controller).
 * **AI Action:**
   * Located all raw files in `Downloads/` and staged them cleanly in `data/`.
@@ -24,7 +24,7 @@ This document records the engineering decisions, prompts used during development
   * First-response SLAs: Chat 15 min, Voice 2h, Social 4h, Email 8h. Missed SLA = ₹350 store credit per breach.
   * Support Policy §6: Tier 2 must be evaluated on resolution days, not tickets closed per week.
 
-### Iteration 2: Deduplication and Timezone Empirical Proof
+### 2. Cleaning duplicates and timestamps
 * **Prompt / Task:** Inspect 12,528 raw rows, verify 653 duplicate ticket pairs, and resolve timestamp conventions between Helpdesk and Legacy Freshdesk.
 * **What AI Explored:**
   * Checked whether `created_at`, `first_response_at`, or `resolved_at` had timezone offsets.
@@ -39,7 +39,7 @@ This document records the engineering decisions, prompts used during development
   * Keep Helpdesk row for duplicate pairs.
   * Apply +5.5h shift to `resolved_at` on all `legacy_fd` tickets.
 
-### Iteration 3: Order ID Fallback Join Verification
+### 3. Handling missing order IDs
 * **Prompt / Task:** Verify the 33.9% blank `order_id` tickets and assess fallback join using `(customer_id, product_sku)`.
 * **Empirical Validation:**
   * Direct order IDs: 7,852 tickets matched 100% to `orders.csv`.
@@ -51,7 +51,7 @@ This document records the engineering decisions, prompts used during development
   * Disambiguated 710 out of 720 multi-matches by filtering for `order_date <= ticket_created_date` and selecting the nearest prior purchase date.
   * Only 10 tickets out of 4,023 remained ambiguous (customer ordered same SKU multiple times on the same date).
 
-### Iteration 4: Repeat Contacts & Primary Business Metric
+### 4. Choosing the repeat-contact metric
 * **Prompt / Task:** Calculate repeat contact rates across 14-day and 30-day windows, testing Same Customer, Same Product, and Same Order.
 * **What AI Generated vs What Was Verified:**
   * Verified 14-day same-order return contacts: 1,912 tickets (16.1%), handling cost ₹5,20,980.
@@ -61,7 +61,7 @@ This document records the engineering decisions, prompts used during development
   * Adopt Same-Order repeat contact as the primary, strictly defensible business proxy.
   * Refrain from claiming "perfect First Contact Resolution" because helpdesks lack a root-cause problem ID.
 
-### Iteration 5: Theme Extraction & Discovery of the Cancellation Glitch
+### 5. Finding complaint themes
 * **Prompt / Task:** Mine complaints from `customer_message` without paid per-ticket LLM APIs.
 * **What AI Discovered:**
   * 1,031 voice tickets started with boilerplate `[IVR transcript]`. Filtered out to avoid indexing the word "IVR".
@@ -71,7 +71,7 @@ This document records the engineering decisions, prompts used during development
   * First regex pass missed phonetic variants (`deliveered`, `geryed out`, `app address edit failed`).
   * Enhanced regex patterns with fuzzy/character-class matching, achieving 100% accuracy on the 50-ticket ground-truth audit sample.
 
-### Iteration 6: Fair Leaderboard Architecture
+### 6. Building the leaderboard
 * **Prompt / Task:** Build an agent leaderboard without penalizing Tier 2 warranty technicians.
 * **Decision Accepted:**
   * Segregated Tier 2 (Escalations & Warranty) into a dedicated scorecard ranked by **Resolution Duration in Days** (averaging 5.34 to 6.11 days).
@@ -79,7 +79,7 @@ This document records the engineering decisions, prompts used during development
 
 ---
 
-### Iteration 7: Grounded Multi-Provider AI Support Analyst Integration
+### 7. Adding the AI analyst
 * **Prompt / Task:** Transform the AI Support Analyst into a real, multi-provider LLM reasoning layer integrated with Google Gemini, Groq, and NVIDIA Nemotron, while keeping deterministic analytics as the single source of truth.
 * **Architecture Implemented:**
   * Created `backend/ai/` module with `BaseLLMProvider`, `AIRouter`, `build_grounded_context`, system prompts, and Pydantic schemas.
@@ -98,7 +98,7 @@ This document records the engineering decisions, prompts used during development
 
 ---
 
-## 3. Discarded Approaches & Rationale
+## 8. Things I tried and did not keep
 
 | Discarded Approach | Reason for Rejection | Final Accepted Solution |
 | :--- | :--- | :--- |
@@ -114,9 +114,9 @@ This document records the engineering decisions, prompts used during development
 
 ---
 
-## 8. Submission Readiness Audit — 27 Sep 2026
+## 9. Final submission check — 27 Sep 2026
 
-After comparing the implementation against the Vireo Task 1 V3 brief, the submission was tightened around the client's actual evaluation criteria.
+I checked the project again against the Task 1 V3 brief and cleaned up the parts that could be misleading or too ambitious.
 
 * Added the completed `submission-form.md` with the business number, cost arithmetic, validation evidence, scope decisions, limitations, AI disclosure, and handoff notes.
 * Corrected the business-impact arithmetic to **₹122,525/quarter** for a 5 percentage-point reduction at 650 tickets/week and ₹290 blended contact cost.
