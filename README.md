@@ -4,7 +4,7 @@
 
 This is the support-ticket analysis tool I built for Vireo Audio.
 
-The task gave me 18 months of support data and asked for something useful from it: a weekly view of customer complaints and a way to understand agent workload. I cleaned the data, worked out the main metrics in Python, built a web app around the results, and added an optional AI analyst.
+The task gave me 18 months of support data and asked for something useful from it: a weekly view of customer complaints and a way to understand agent workload. I cleaned the data, calculated the main metrics in Python, built a web app around the results, and added an optional AI analyst.
 
 The raw export has **12,528 rows**. After removing **653 duplicate rows**, there are **11,875 unique tickets**.
 
@@ -20,7 +20,7 @@ The important part of the design is that **Python calculates the numbers first**
 - Data-quality checks
 - Optional AI analyst
 
-It turns the raw CSV files into something a support lead can actually look through without manually joining files and calculating everything again.
+It turns the raw CSV files into something a support lead can look through without manually joining files and calculating everything again.
 
 ### How it works
 
@@ -46,13 +46,13 @@ I checked duplicates, missing values, timestamps and the joins between tickets, 
 
 There were **653 duplicate rows**, which I removed before calculating the main metrics.
 
-I also corrected the legacy resolved_at timestamp issue by **+5.5 hours**. I did not change the other main timestamps.
+I also corrected the legacy `resolved_at` timestamp issue by **+5.5 hours**. I did not change the other main timestamps.
 
 ### 2. Analysis
 
-The main calculations live in the Python code under src/.
+The main calculations live in the Python code under `src/`.
 
-They cover repeat contacts, SLA, agent data, complaint themes, cleaning and validation.
+They cover repeat contact, SLA, agent data, complaint themes, cleaning and validation.
 
 The same input data should produce the same main numbers every time.
 
@@ -72,7 +72,7 @@ The app puts the results in one place so the user does not have to work directly
 
 ### 5. AI layer
 
-The AI analyst gets verified numbers and relevant ticket context.
+The AI analyst receives verified numbers and relevant ticket context.
 
 It is useful for questions and explanations, but the Python analysis remains the source of truth.
 
@@ -84,7 +84,7 @@ The main metric I used is **30-day same-order repeat contact**.
 
 **3,201 / 11,875 = 26.96%**
 
-That means about **27% of tickets are contacts from the same customer about the same order within 30 days**.
+That means about **27% of tickets match a same-customer, same-order repeat contact within 30 days**.
 
 This is a proxy. There is no root-cause/problem ID in the data, so I cannot honestly say every repeat contact is the exact same underlying problem.
 
@@ -100,11 +100,11 @@ This is a modeled target/opportunity, not a claim that the tool has already save
 
 ### Cancellation / address editing
 
-I found **324 tickets** in the Other category matching a cancellation/address-editing problem.
+I found **324 tickets** in the `Other` category matching a cancellation/address-editing problem.
 
 Customers mention problems such as the cancel button being unavailable or not being able to change the delivery address.
 
-I would reproduce the product flow before attaching a savings number to this finding.
+This is a text pattern, not proof of a specific product bug. I would reproduce the product flow before attaching a savings number to it.
 
 ### SLA
 
@@ -162,7 +162,7 @@ The goal was a small working tool that can be checked, not a large system that l
 
 ### Requirements
 
-- Python 3.8+
+- Python 3.10+
 - Node.js 18+
 - npm
 
@@ -182,18 +182,18 @@ The goal was a small working tool that can be checked, not a large system that l
     npm run build
     npm run start -- -p 3000
 
-Then open http://localhost:3000.
+Then open `http://localhost:3000`.
 
-On Windows, start.ps1 is included as well.
+On Windows, `start.ps1` is included as well.
 
 ## Important limitations
 
 - Repeat contact is a proxy because there is no root-cause ID.
 - 10 blank-order tickets are intentionally left unresolved.
-- The cancellation/address-editing finding needs product-flow reproduction before estimating savings.
+- The cancellation/address-editing finding is a text pattern and needs product-flow reproduction before estimating savings.
 - Historical volume is roughly 189 tickets/week; 650/week is the planning scenario from the brief.
 - The web app is a prototype, not a production helpdesk.
 - The AI analyst is optional and should not replace the Python numbers.
 
-For the client-facing summary, see memo-to-priya.md.
-For the build decisions and AI-assisted work notes, see design-log.md.
+For the client-facing summary, see `memo-to-priya.md`.
+For the build decisions and AI-assisted work notes, see `design-log.md`.
