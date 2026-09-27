@@ -64,9 +64,9 @@ def build_grounded_context(
             "=== CANCELLATION / ADDRESS EDITING FRICTION GLITCH ===\n"
             f"- Affected Tickets: Exactly {canc.get('ticket_count', 324):,} tickets\n"
             f"- Share of 'Other' Category: Exactly {canc.get('share_of_other_pct', 19.2):.1f}% (324 out of 1,686 'Other' category tickets)\n"
-            "- Root Cause: Bug in app and website checkout flow where 'cancel button is greyed out' or address editing fails right after purchase.\n"
-            "- Customer Symptoms: 'cancel button greyed out', 'tried editing in app', 'address wrong urgently change before ship'\n"
-            "- Recommended Fix: Introduce a 30-minute self-service grace period to eliminate ~20–30 high-friction tickets/week."
+            "- Evidence: Ticket text matches cancellation/address-editing patterns, including reports of a disabled cancel button or failed address edits.\n"
+            "- Limitation: Ticket text alone does not prove the exact product cause or the number of contacts a fix would prevent.\n"
+            "- Next step: Reproduce the flow and measure the effect of any product change."
         )
 
     # 4. SLA Section
