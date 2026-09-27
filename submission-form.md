@@ -2,116 +2,117 @@
 
 ## What did you build, and what business outcome does it move? State the number and the money.
 
-I built a small support analytics tool around Vireo's 18 months of ticket data. It gives a weekly complaint digest, an agent leaderboard, operational/SLA numbers, ticket search, validation checks, and an optional AI analyst.
+I built a small tool for the Vireo support-ticket data.
 
-The primary business metric is **30-day same-order repeat contact rate**. The verified baseline is **3,201 repeat tickets / 11,875 unique tickets = 26.96%**.
+It cleans the data, gives a weekly complaint digest, shows an agent leaderboard, calculates SLA/repeat-contact numbers, lets you search tickets, and has an optional AI chat for questions about the data.
 
-The target I used is to reduce that rate from **27.0% to 22.0%** at Vireo's stated planning volume of **650 tickets/week**. A 5 percentage-point reduction represents:
+The main number I used is **30-day same-order repeat contact**:
+
+**3,201 / 11,875 = 26.96%**
+
+The target is to bring that from 27.0% to 22.0% at the **650 tickets/week** planning volume in the brief.
+
+That means:
 
 - 650 × 52 / 4 = **8,450 tickets/quarter**
-- 8,450 × 5% = **422.5 fewer repeat contacts/quarter** (about 423)
-- 8,450 × 5% × ₹290 = **₹122,525/quarter**
+- 8,450 × 5% = **422.5 fewer repeat contacts/quarter**
+- 422.5 × ₹290 = **₹122,525/quarter**
 
-This is a measurable operating target, not a claim that the tool itself has already produced the savings.
+This is the modelled opportunity, not a claim that the tool itself has already created that saving.
 
-The tool also surfaces a concrete product/support issue: **324 tickets**, or **19.2% of the "Other" category**, contain the cancellation/address-editing friction pattern.
+I also found **324 tickets (19.2% of "Other")** matching a cancellation/address-editing problem.
 
-## What does one run cost, and what would a month cost at Vireo's volume (roughly 650 tickets a week)?
+## What does one run cost, and what would a month cost at Vireo's volume?
 
-The core pipeline uses Python's standard library and makes **no paid API calls**.
+The main analysis is local Python and does not need a paid API.
 
-- One deterministic analysis run: **₹0**
-- 650 tickets/week × 52/12 = **~2,817 tickets/month**
-- Core processing at that volume: **₹0 in model/API fees**
-- The optional AI Support Analyst can use cloud providers, but it is not required for the digest or leaderboard. During development/testing I incurred **₹0 in paid API spend** using available free access/quotas.
+- One core run: **₹0**
+- 650/week is about **2,817 tickets/month**
+- Core model/API cost at that volume: **₹0**
+- I spent **₹0 on paid API calls** during development/testing.
 
-That ₹0 figure is for the core delivered tool. The optional cloud AI can have a cost depending on the provider and quota.
+The optional AI analyst can use cloud models, so that part depends on the provider and quota. It is not needed for the main numbers.
 
-## How do you know it works? Sample size, how you checked, error rate, and the kind of case it gets wrong.
+## How do you know it works?
 
-I checked it in a few different ways:
+I checked it against the raw data and against a few smaller manual/test cases.
 
-1. **Dataset reconciliation:** 12,528 raw rows reconcile to **11,875 unique tickets** after **653 duplicate rows** are removed.
-2. **17 automated validation checks:** the cleaning, timestamps, CSAT, SLA, repeat-contact, refund and replacement calculations are programmatically reconciled.
-3. **Theme audit:** the cancellation/address-editing classifier was manually audited on **50 tickets** and achieved **100% precision and recall on that audit sample**.
-4. **AI analyst tests:** automated tests cover grounding, schema handling, provider failover, local fallback and secret-leak checks.
-5. **Scenario checks:** repeat-contact, cancellation, SLA, greeting/capability and fallback scenarios are exercised in the test suite.
+1. **12,528 raw rows → 11,875 unique tickets** after 653 duplicates are removed.
+2. **17 automated checks** cover the main cleaning and metric calculations, and all 17 passed.
+3. The cancellation/address-editing theme was manually checked on **50 tickets**. It had 100% precision and recall on that sample.
+4. The AI analyst has tests for grounding, response format, provider fallback, local fallback and secret leakage.
+5. I also tested repeat-contact, SLA, cancellation and fallback scenarios.
 
-I am also keeping the known limitations visible instead of hiding them. **10 tickets with blank order IDs remain ambiguous** because the same customer bought the same SKU on the same date more than once. I deliberately leave those relationships unlinked rather than guessing.
+Known bad/uncertain cases:
 
-The biggest conceptual limitation is that the dataset has no unique root-cause/problem ID. Therefore, **same customer + same order within 30 days is a proxy for repeat contact, not proof that the underlying problem was identical**.
+- **10 tickets** have ambiguous order matches because the same customer bought the same SKU multiple times on the same date. I leave them unlinked.
+- The repeat-contact number is a **proxy**, not proof that the exact same underlying problem happened again.
+- The theme audit is 50 tickets, not every ticket in the dataset.
 
-## Did you change, narrow, or push back on the client's ask? What, when, and why.
+## Did you change, narrow, or push back on the client's ask?
 
 Yes.
 
-- **Agent leaderboard:** Priya asked for tickets closed per week, but Neha explicitly warned not to rank the warranty team that way. I kept the leaderboard but separated Tier 2 Escalations & Warranty and evaluate it on **resolution speed in days**, while Tier 1 agents are compared within their functional teams.
-- **Repeat contacts:** I did not claim "same issue" directly. I tested customer-, product- and order-level proxies and chose **same-order within 30 days** because it is the most defensible join available in the data.
-- **AI usage:** I did not make an LLM the source of truth. Deterministic Python calculations remain authoritative because the business numbers need to be reproducible and auditable.
-- **Cost:** I deliberately kept the core workflow at **₹0 per run** rather than making the business case depend on a per-ticket model bill.
+The biggest change was the leaderboard.
+
+The brief asks for tickets closed per week, but the email thread/policy says Tier 2 warranty work should not be judged that way. So I kept Tier 2 separate and used resolution time for it. Tier 1 is compared within teams.
+
+I also pushed back on using an LLM as the source of truth. The Python calculations stay authoritative.
+
+For repeat contact, I tested different joins and used same customer + same order within 30 days because it was the most defensible one I could get from the data.
 
 ## What is wrong with what you are handing us?
 
-- The repeat-contact metric is a **proxy**, because there is no root-cause problem ID.
-- **10 ambiguous same-day order matches** are intentionally left unresolved.
-- The cancellation theme audit is based on a **50-ticket sample**, not a manual review of every ticket.
-- The optional cloud AI analyst can experience provider rate limits, latency or temporary 5xx errors. The router falls back to another provider or the local deterministic engine.
-- The local fallback is intentionally less flexible than a general-purpose LLM.
-- The historical dataset averages roughly **189 tickets/week**, while the client supplied **650 tickets/week** as the forward planning scenario. Financial impact at 650/week is therefore a scenario model, not historical observed volume.
-- The web product requires the FastAPI backend and Next.js frontend to be running; the deterministic CLI remains available independently.
-- The UI is an operational prototype, not a production helpdesk replacement. Authentication, role-based access and a production database were deliberately not built.
+A few things:
 
-## What did you deliberately leave out, and why that rather than something else?
+- Repeat contact is only a proxy because there is no root-cause ID.
+- 10 order matches are still ambiguous.
+- The cancellation theme was manually audited on 50 tickets.
+- Cloud AI can hit rate limits or temporary errors.
+- The historical dataset averages about 189 tickets/week; 650/week is a planning scenario.
+- The web app is a prototype, not a production helpdesk. There is no auth/RBAC/production database.
 
-I left out:
+## What did you deliberately leave out, and why?
 
-- Per-ticket LLM classification of all 11,875 tickets — unnecessary for the requested digest and leaderboard, and it introduces cost, latency and reproducibility risk.
-- A global composite agent score — it would hide trade-offs between productivity, CSAT, SLA and transfers and could unfairly mix Tier 1 and Tier 2 work.
-- Production authentication, deployment infrastructure and a full ticket-management workflow — useful for a platform product, but outside the five-hour task and not required to answer Priya's business question.
-- Broad sentiment/embedding infrastructure — it would add complexity without being necessary to identify the strongest operational themes in this dataset.
+I did not build:
 
-I focused on the things the brief actually asks for: **reproducible numbers, the weekly digest, a fair leaderboard, validation, and a clear business outcome**.
+- an LLM classification call for every ticket;
+- a single combined agent score;
+- production auth/deployment/full ticket management;
+- a large sentiment/embedding system.
 
-## Anything you built or found that nobody asked for?
+Those would have added time and complexity without helping much with the actual task.
 
-Yes.
+## Anything built/found that nobody asked for?
 
-- A **cancellation/address-editing friction theme** affecting 324 tickets and 19.2% of the "Other" category.
-- **SLA breach exposure:** 1,051 breaches and ₹367,850 in store-credit liability.
-- Data-quality diagnostics covering the migration duplicates, legacy timestamp normalization, CSAT=0 semantics and ambiguous order joins.
-- An optional grounded AI analyst that lets CX leadership ask questions against the verified metrics without allowing the LLM to become the numerical source of truth.
+Yes:
+
+- cancellation/address-editing theme: 324 tickets;
+- SLA exposure: 1,051 breaches / ₹367,850 store credit;
+- data-quality checks for duplicates, timestamps, CSAT and order matching;
+- optional AI analyst.
 
 ## What did you use AI for?
 
-I used **Google Antigravity/Gemini** and **GLM 5.3 Flash through Freebuff AI** while building and checking the project.
+I used **Google Antigravity/Gemini** and **GLM 5.3 Flash through Freebuff AI**.
 
-They helped with:
-- exploring the data and proposing hypotheses;
-- generating and refactoring Python/TypeScript;
-- debugging the FastAPI/Next.js integration;
-- designing and testing the grounded AI analyst;
-- reviewing edge cases and producing the development log.
+I used them for data exploration, code generation/refactoring, debugging, thinking through edge cases, and testing the AI analyst.
 
-I also threw away or corrected approaches when the data did not support them. For example:
-- treating all legacy timestamps as UTC;
-- choosing an arbitrary order when multiple same-day orders existed;
-- using an LLM as the source of truth for business metrics;
-- ranking all agents globally by ticket count;
-- building an opaque composite score.
+I did not keep everything the models suggested. I corrected or removed things when the data did not support them. Examples include the old timestamp assumption, arbitrary order matching, using the LLM for the actual numbers, and a global agent ranking.
 
-**Paid API spend: ₹0.** Available free access/quotas were used during development/testing. Cloud-model availability can vary by provider.
+**Paid API spend: ₹0.**
 
-**Three-minute screen recording:** PASTE_PUBLIC_GOOGLE_DRIVE_RECORDING_LINK_HERE
+**Three-minute recording:** PASTE_PUBLIC_GOOGLE_DRIVE_RECORDING_LINK_HERE
 
 ## Public Google Drive Link
 
 PASTE_PUBLIC_GOOGLE_DRIVE_FOLDER_OR_FILE_LINK_HERE
 
-## Someone picks this up on Monday and you are unreachable. The three things they need to know.
+## Monday handoff — three things to know
 
-1. Run `python run.py` first. It is the source-of-truth deterministic pipeline and regenerates the analytical outputs from the raw files in `data/`.
-2. The primary business metric is **30-day same-order repeat contact**: **3,201 / 11,875 = 26.96%**, with a planning target of **22% at 650 tickets/week**.
-3. The web app is mainly the presentation layer: start the FastAPI backend on port 8000 and the Next.js frontend on port 3000. The AI analyst is an explanation layer with provider fallback; it must not replace the deterministic metrics.
+1. Run `python run.py` first. That is the main analysis and it reads the raw files from `data/`.
+2. The main number is **3,201 / 11,875 = 26.96%** 30-day same-order repeat contact.
+3. The web app is just the easier way to look at the results. The AI chat is optional and should not replace the Python numbers.
 
 ## Honest hours spent
 
