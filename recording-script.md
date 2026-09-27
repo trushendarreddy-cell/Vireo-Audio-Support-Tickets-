@@ -8,11 +8,11 @@
 ### [0:00 – 0:25] 1. Introduction & What Was Built
 *(Action: Show project directory structure in VS Code: `run.py`, `src/`, `output/`, `data/`)*
 
-> "Hi everyone. Today I'm presenting the auditable CX analytics and digest tool built for Priya Raman, Head of Customer Experience at Vireo Audio.
+> "Hi everyone. Today I'm presenting the support analytics tool built for Priya Raman, Head of Customer Experience at Vireo Audio.
 > 
-> Priya requested two things: a weekly customer complaint digest, and an agent leaderboard based on closed tickets, while Finance explicitly mandated zero surprise model bills. 
+> The brief asked for two main things: a weekly complaint digest and an agent leaderboard. I also had to show a business number, prove that the output works, explain what I left out, and disclose my AI usage. 
 > 
-> Instead of building an over-engineered web dashboard or a costly LLM API wrapper, I built a lightweight, deterministic Python tool using only the standard library. It processes all 18 months of Vireo's support data in under one second with zero runtime cost."
+> I kept the core simple. Python does the cleaning and calculations, and the web app sits on top of those results. The AI analyst is optional, so the core numbers do not depend on an LLM. It processes all 18 months of Vireo's support data in under one second with zero runtime cost."
 
 ---
 
@@ -32,7 +32,7 @@
 > 
 > One major discovery we surfaced is a hidden product bug: nearly 20% of tickets categorized under 'Other' are customers trying to cancel an accidental order or fix a shipping address right after checkout, complaining that the 'cancel button is greyed out' or 'in-app edit failed.' 
 > 
-> Because this self-service UI fails, dozens of customers per week flood the chat and email queues to intercept shipments before dispatch. This is a concrete product issue to reproduce and fix; the dataset shows the contact pattern, but not the exact post-fix reduction."
+> The important part is that this is a real pattern in the ticket text. I would reproduce the checkout flow before claiming how many contacts a fix would remove."
 
 ---
 
@@ -66,6 +66,6 @@
 > But the business outcome is crystal clear:
 > Over 18 months, same-order repeat contacts accounted for 27.0% of tickets (3,201 tickets)—or 16.1% on a 14-day window (1,910 tickets)—consuming ₹8.58 lakh in handling costs. 
 > 
-> Reducing repeat contacts by just 5 percentage points at Vireo's operating scale of 650 tickets per week frees up over ₹1.2 lakh per quarter in contact-handling capacity, alongside ₹61,000 per quarter in SLA credit savings.
+> Reducing repeat contacts by just 5 percentage points at Vireo's operating scale of 650 tickets per week frees up about ₹1.23 lakh per quarter in contact-handling capacity, alongside ₹61,000 per quarter in SLA credit savings.
 > 
-> The core pipeline is documented and validated; the web app and optional AI analyst are presentation layers around the deterministic source of truth. Thank you."
+> The core pipeline is documented and validated; the web app and optional AI analyst are presentation layers around the deterministic source of truth. That is the tool. Thanks."
