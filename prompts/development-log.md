@@ -15,7 +15,7 @@ Paid API spend: **₹0**.
 
 The actual ticket calculations run locally in Python.
 
-## 1. First I read the data and policy
+## 1. First I read the data and understood what are the requirements
 
 I loaded the CSV files and read the support policy and email thread.
 
