@@ -1,12 +1,12 @@
-# Vireo Audio — Support Intelligence & Analytics
+# Vireo Audio — Support Intelligence
 
-A lightweight, auditable support-intelligence tool built for CX leadership. The deterministic analytics pipeline is the source of truth; the optional AI analyst explains verified results and has a local fallback.
+A small support analytics tool for Vireo Audio. It takes the 18 months of ticket data, cleans it, finds the main support problems, builds the weekly digest and agent leaderboard, and lets you ask questions through the AI analyst. The numbers come from the Python pipeline first; the AI is there to explain them.
 
-Processes 18 months of customer support records (12,528 raw records; 11,875 unique tickets) to deliver an **Executive Dashboard**, a grounded **AI Support Analyst**, **Complaint Intelligence** with defect isolation, **Operations & Cost Analysis**, a **Fair Agent Leaderboard**, and a **Ticket Explorer**.
+Works with 18 months of customer support records (12,528 raw records; 11,875 unique tickets) to deliver an **Executive Dashboard**, a grounded **AI Support Analyst**, **Complaint Intelligence** with defect isolation, **Operations & Cost Analysis**, a **Fair Agent Leaderboard**, and a **Ticket Explorer**.
 
 ---
 
-## 1. Quick Start (Clean Machine Instructions)
+## 1. Run it on a clean machine
 
 ### Prerequisites
 * **Python 3.8+** (Tested on Python 3.10)
@@ -41,7 +41,7 @@ python run.py
 
 ---
 
-## 2. Product Features & Navigation (`http://localhost:3000`)
+## 2. What is in the app
 
 1. **Executive Dashboard:** Live high-level KPIs (Volume, 8.85% SLA breach, 3.32 CSAT, 27.0% repeat contact, ₹3.67L liability), support health channel mix, and operational cost projections.
 2. **AI Support Analyst:** Interactive operational analyst grounded strictly in the 11,875 verified records. Delivers structured responses with **Direct Answer**, **Supporting Evidence**, and **Source Citations** at ₹0 API cost.
@@ -54,10 +54,10 @@ python run.py
 
 ---
 
-## 3. Business Outcome & Verified Analytical Baselines
+## 3. Main business number
 
 ### Business goal
-Use the tool to reduce **30-day same-order repeat contacts from 27.0% to 22.0%** at Vireo's stated operating volume of **650 tickets/week**. That is a A 5 percentage-point reduction represents **422.5 fewer repeat contacts per quarter on the planning model** (about 423). At the policy's blended contact cost of **₹290**, the modeled capacity/cost opportunity is **₹122,525 per quarter**. This is a target for operational improvement, not a claim that the tool itself has already caused the reduction.
+Use the tool to reduce **30-day same-order repeat contacts from 27.0% to 22.0%** at Vireo's stated operating volume of **650 tickets/week**. A 5 percentage-point reduction represents **422.5 fewer repeat contacts per quarter on the planning model** (about 423). At the policy's blended contact cost of **₹290**, the modeled capacity/cost opportunity is **₹122,525 per quarter**. This is a target, not a claim that the tool has already saved this money.
 
 ### Verified analytical baselines
 
@@ -78,9 +78,9 @@ Use the tool to reduce **30-day same-order repeat contacts from 27.0% to 22.0%**
 
 ---
 
-## 4. Root Cause Analysis: Metric Discrepancy Resolution
+## 4. One important data issue I found
 
-### Investigation of Baseline Differences:
+### Why the repeat numbers changed during development
 * **The Variance:** An intermediate run produced 1,912 (14d) and 3,204 (30d) vs the verified baselines of 1,910 (14d) and 3,201 (30d).
 * **Root Cause Identified:** When customers placed multiple orders for the same SKU on the exact same date with blank ticket order IDs (only 10 tickets out of 4,023), `cleaner.py` initially assigned `candidates[0]['order_id']` regardless of date precedence. This artificially linked ticket `TK-244398` to `TK-243985` and `TK-242745` to `TK-242577`, creating false repeat relationships.
 * **Resolution:** Strictly enforced the task requirement: *"Do not create false order relationships if ambiguity exists."* Ambiguous orders without clear date precedence remain unlinked, perfectly reconciling the dataset to the authoritative baselines:
@@ -89,7 +89,7 @@ Use the tool to reduce **30-day same-order repeat contacts from 27.0% to 22.0%**
 
 ---
 
-## 5. Repository Architecture
+## 5. Project structure
 
 ```
 vireo/
@@ -128,7 +128,7 @@ vireo/
 
 ---
 
-## 6. Grounded Multi-Provider AI Support Analyst Architecture
+## 6. How the AI analyst works
 
 The AI Support Analyst uses real LLM inference grounded strictly in the verified deterministic analytics engine:
 
@@ -174,12 +174,12 @@ GROQ_MODEL=qwen/qwen3.8-27b
 NEMOTRON_MODEL=nvidia/nemotron-3-nano-omni-30b-a3b-reasoning
 ```
 
-### Security & Privacy Guarantee
+### Security
 * **Zero Client Exposure:** API keys are never bundled, transmitted, or accessible to client-side code.
 * **Zero Commitments:** `.env` is permanently gitignored.
 * **PII Masking:** Customer names, phone numbers, and emails are scrubbed before reaching any LLM prompt.
 
-### Running AI Tests
+### Testing the AI analyst
 1. **Fast Automated Unit Tests (with mocks):**
    ```bash
    python -m unittest tests/test_ai_analyst.py
