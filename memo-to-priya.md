@@ -3,64 +3,77 @@
 **To:** Priya Raman, Head of Customer Experience, Vireo Audio  
 **From:** Rushendar Reddy  
 **Date:** 27 September 2026  
-**Subject:** What I found in the support tickets
+**Subject:** Support ticket findings and what I would focus on next
 
-I built a small tool around the 18 months of support data. The main things it does are the weekly complaint digest, the agent leaderboard, some operational numbers, and ticket search. I also added an optional AI analyst for asking questions about the data.
+I went through the 18 months of support tickets and built a small tool to make the weekly analysis easier. It produces a complaint digest, agent views, the main support metrics, ticket search, and an optional AI analyst.
 
-After cleaning the export, I have **11,875 unique tickets**.
+After cleaning the export, there are **11,875 unique tickets** from **12,528 rows**.
 
-### The number I'd watch
+## The main number
 
-**3,201 tickets out of 11,875 (27.0%)** are same-order repeat contacts within 30 days.
+The clearest number I found is the repeat-contact rate.
 
-Using the 650 tickets/week planning number from the brief, taking that from 27% to 22% would mean about **423 fewer repeat contacts per quarter**.
+**3,201 of 11,875 tickets (27.0%)** are contacts from the same customer about the same order within 30 days.
 
-At ₹290 per contact, that is about **₹1.23 lakh per quarter** in modeled contact-handling capacity.
+The dataset does not have a root-cause ID, so I would not call all of these the exact same problem. I am using this as a practical repeat-contact proxy.
 
-I am treating that as a target, not as money the tool has already saved.
+The brief gives **650 tickets/week** as the planning volume. If the 30-day repeat-contact rate moved from 27% to 22%, that would be roughly **423 fewer repeat contacts per quarter**.
 
-### One thing I would investigate
+At **₹290 per contact**, that is about **₹1.23 lakh per quarter** of modeled contact-handling capacity.
 
-I found **324 tickets** in the "Other" category that match a cancellation/address-editing problem. Customers mention things like the cancel button being greyed out or being unable to change the address in the app.
+That is a target/opportunity estimate, not a claim that the tool has already saved that money.
 
-I would reproduce that flow before putting a savings number on it. The ticket data shows the pattern, but it does not prove how many contacts a fix would prevent.
+## A pattern worth checking
 
-### Repeat contacts
+I found **324 tickets** in the "Other" category that match a cancellation or address-editing problem.
 
-I checked 14-day and 30-day windows:
+Some customers describe the cancel button being unavailable or being unable to change the delivery address in the app.
 
-- 14 days: **1,910 tickets / 16.1%**
-- 30 days: **3,201 tickets / 27.0%**
+I would reproduce this flow before putting a savings figure on it. The tickets show that customers are reporting the problem, but they do not tell us how many contacts a product fix would actually prevent.
 
-I used the 30-day number because it is based on the same customer and same order, which is the cleanest join available here.
+## What the repeat-contact data looks like
 
-It is still only a proxy. There is no root-cause ID in the export, so a return contact does not automatically mean the exact same problem happened again.
+I checked two windows:
 
-### SLA
+- **14 days:** 1,910 / 11,875 = **16.1%**
+- **30 days:** 3,201 / 11,875 = **27.0%**
 
-There were **1,051 first-response SLA breaches**, which means **₹367,850** in store-credit exposure under the policy.
+I used the 30-day figure for the main metric because it gives more room to catch a follow-up contact while still using the same customer + order relationship.
 
-The historical data has an average of roughly 189 tickets/week. The 650/week number is the planning scenario from the brief, so I kept those two things separate instead of pretending historical volume was 650.
+Again, it is a proxy rather than a direct measure of repeated root causes.
 
-### Leaderboard
+## SLA
 
-I did not rank all agents together.
+There are **1,051 first-response SLA breaches**.
 
-Tier 2 Escalations & Warranty handles cases that can take several days and involve physical RMAs. I kept those cases separate and looked at resolution time.
+Under the support policy, that corresponds to **₹367,850** in store-credit exposure.
 
-Tier 1 agents are compared inside their own teams. I also show the other numbers like SLA, CSAT and repeat contact rather than hiding everything inside one score.
+This is another number I would keep in the weekly view because it gives a direct way to see whether response-time problems are improving.
 
-### A few data things worth knowing
+## Agent view
 
-- 653 duplicate rows were removed.
-- Legacy `resolved_at` timestamps needed a +5.5 hour correction; the other main timestamps did not.
-- CSAT value 0 is treated as no response, following the policy.
-- 10 blank-order tickets are still ambiguous because the customer had multiple orders for the same SKU on the same date.
+I did not put every agent into one overall ranking.
 
-### What I would do next
+The warranty and Tier 2 work is different from normal Tier 1 ticket handling. Those cases can take several days and can involve physical RMAs, so I kept that group separate and looked at resolution time for it.
 
-1. Reproduce the cancellation/address-editing flow.
-2. Look at why email has the highest SLA breach rate.
-3. Keep using the weekly digest to see whether the repeat-contact number actually moves after fixes.
+For Tier 1, the tool compares agents within their functional teams and shows the underlying numbers such as tickets closed, SLA, CSAT and repeat contact instead of turning everything into one score.
 
-The core analysis costs **₹0 in API fees**. The AI chat is optional.
+## Data checks and limitations
+
+A few things in the export needed attention:
+
+- **653 duplicate rows** were removed.
+- Legacy `resolved_at` timestamps needed a **+5.5 hour correction**.
+- A CSAT value of **0** is treated as no response, based on the support policy.
+- **10 tickets** have blank order IDs and are left unresolved because the same customer had multiple orders for the same SKU on the same date.
+- Historical volume averages roughly **189 tickets/week**. I have kept that separate from the **650/week** planning scenario in the brief.
+
+## What I would do next
+
+1. Reproduce the cancellation/address-editing flow and check whether the reported friction still exists.
+2. Look into the high SLA-breach pattern, especially for email.
+3. Keep the weekly digest running and track whether repeat contacts and SLA breaches move after the underlying issues are fixed.
+
+The core analysis runs without paid API calls. The AI analyst is optional and is not used to calculate the main numbers.
+
+**Bottom line:** the biggest number I would track from this dataset is the **27.0% repeat-contact rate**. The useful next step is not to assume the cause, but to use the weekly data to find the specific issues behind those repeat contacts and check whether fixing them changes the number.
