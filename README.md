@@ -1,7 +1,5 @@
 # Vireo Audio — Support Ticket Analysis
 
-## What this product is
-
 This is the support-ticket analysis tool I built for Vireo Audio.
 
 The task gave me 18 months of support data and asked for something useful from it: a weekly view of customer complaints and a way to understand agent workload. I cleaned the data, calculated the main metrics in Python, built a web app around the results, and added an optional AI analyst.
