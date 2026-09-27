@@ -5,8 +5,9 @@ This document records the engineering decisions, prompts used during development
 ---
 
 ## 1. AI Tools Used
-* **Primary AI Engine:** Google Antigravity Agent (powered by Gemini models).
+* **Primary coding/reasoning tools:** Google Antigravity Agent (Gemini models) and GLM 5.3 Flash through Freebuff AI.
 * **Environment:** Local VS Code / PowerShell on Windows with direct terminal and file operations.
+* **Paid API spend:** ₹0 during the task. Free access/quotas were used for model-assisted development/testing.
 * **Production Runtime Dependency:** **None (₹0.00)**. All production analysis code uses the Python Standard Library (`csv`, `datetime`, `collections`, `re`, `json`, `pathlib`).
 
 ---
@@ -109,3 +110,17 @@ This document records the engineering decisions, prompts used during development
 | **Assuming legacy created_at was UTC** | Empirical subtraction proved created_at and first_response_at are identical in IST across duplicates. | Shifted only legacy resolved_at by +5.5h, resolving all 1,874 inversions to 0. |
 | **Broad Customer-level repeat proxy** | 33% customer repeat rate overstates issue recurrence for multi-item repeat buyers. | Adopted strictly defensible Same-Order proxy (27.0% for 30d, 16.1% for 14d). |
 
+
+
+---
+
+## 8. Submission Readiness Audit — 27 Sep 2026
+
+After comparing the implementation against the Vireo Task 1 V3 brief, the submission was tightened around the client's actual evaluation criteria.
+
+* Added the completed `submission-form.md` with the business number, cost arithmetic, validation evidence, scope decisions, limitations, AI disclosure, and handoff notes.
+* Corrected the business-impact arithmetic to **₹122,525/quarter** for a 5 percentage-point reduction at 650 tickets/week and ₹290 blended contact cost.
+* Removed unsupported language suggesting that the cancellation fix would automatically eliminate 20–30 contacts per week. The dataset supports the existence of the friction pattern, not a measured post-fix effect.
+* Corrected clean-machine web startup instructions so the Next.js production build is run before `npm start`.
+* Kept the deterministic Python pipeline as the numerical source of truth and the optional LLM analyst as an explanation layer with fallback.
+* Explicitly documented the 10 ambiguous same-day order matches, the 50-ticket theme audit, the 650-ticket/week planning assumption, and the optional cloud-provider limitations.
