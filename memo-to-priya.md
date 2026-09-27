@@ -13,7 +13,7 @@ After cleaning the export, there are **11,875 unique tickets** from **12,528 row
 
 The clearest number I found is the repeat-contact rate.
 
-**3,201 of 11,875 tickets (27.0%)** are contacts from the same customer about the same order within 30 days.
+**3,201 of 11,875 tickets (27.0%)** match a same-customer, same-order repeat contact within 30 days.
 
 The dataset does not have a root-cause ID, so I would not call all of these the exact same problem. I am using this as a practical repeat-contact proxy.
 
@@ -25,11 +25,11 @@ That is a target/opportunity estimate, not a claim that the tool has already sav
 
 ## A pattern worth checking
 
-I found **324 tickets** in the "Other" category that match a cancellation or address-editing problem.
+I found **324 tickets** in the "Other" category that match a cancellation or address-editing text pattern.
 
 Some customers describe the cancel button being unavailable or being unable to change the delivery address in the app.
 
-I would reproduce this flow before putting a savings figure on it. The tickets show that customers are reporting the problem, but they do not tell us how many contacts a product fix would actually prevent.
+I would reproduce this flow before putting a savings figure on it. The tickets show that customers are reporting the problem, but they do not prove the exact product cause or how many contacts a fix would prevent.
 
 ## What the repeat-contact data looks like
 
@@ -76,4 +76,4 @@ A few things in the export needed attention:
 
 The core analysis runs without paid API calls. The AI analyst is optional and is not used to calculate the main numbers.
 
-**Bottom line:** the biggest number I would track from this dataset is the **27.0% repeat-contact rate**. The useful next step is not to assume the cause, but to use the weekly data to find the specific issues behind those repeat contacts and check whether fixing them changes the number.
+**Bottom line:** the main number I would track from this dataset is the **27.0% repeat-contact rate**. The useful next step is not to assume the cause, but to use the weekly data to find the specific issues behind those repeat contacts and check whether fixing them changes the number.
