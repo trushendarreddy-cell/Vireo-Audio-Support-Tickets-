@@ -2,11 +2,11 @@
 
 ## What did you build, and what business outcome does it move? State the number and the money.
 
-I built a local support-intelligence tool that turns Vireo's 18 months of support data into a weekly complaint digest, an auditable agent leaderboard, operational/SLA analysis, ticket exploration, validation reports, and an optional grounded AI analyst.
+I built a small support analytics tool around Vireo's 18 months of ticket data. It gives a weekly complaint digest, an agent leaderboard, operational/SLA numbers, ticket search, validation checks, and an optional AI analyst.
 
 The primary business metric is **30-day same-order repeat contact rate**. The verified baseline is **3,201 repeat tickets / 11,875 unique tickets = 26.96%**.
 
-My operating target is to reduce that rate from **27.0% to 22.0%** at Vireo's stated planning volume of **650 tickets/week**. A 5 percentage-point reduction represents:
+The target I used is to reduce that rate from **27.0% to 22.0%** at Vireo's stated planning volume of **650 tickets/week**. A 5 percentage-point reduction represents:
 
 - 650 × 52 / 4 = **8,450 tickets/quarter**
 - 8,450 × 5% = **422.5 fewer repeat contacts/quarter** (about 423)
@@ -18,18 +18,18 @@ The tool also surfaces a concrete product/support issue: **324 tickets**, or **1
 
 ## What does one run cost, and what would a month cost at Vireo's volume (roughly 650 tickets a week)?
 
-The core analysis pipeline uses the Python standard library and makes **no paid API calls**.
+The core pipeline uses Python's standard library and makes **no paid API calls**.
 
 - One deterministic analysis run: **₹0**
 - 650 tickets/week × 52/12 = **~2,817 tickets/month**
 - Core processing at that volume: **₹0 in model/API fees**
 - The optional AI Support Analyst can use cloud providers, but it is not required for the digest or leaderboard. During development/testing I incurred **₹0 in paid API spend** using available free access/quotas.
 
-The important distinction is that **₹0 is the cost of the delivered deterministic tool**, not a promise that every future cloud-model configuration will remain free.
+That ₹0 figure is for the core delivered tool. The optional cloud AI can have a cost depending on the provider and quota.
 
 ## How do you know it works? Sample size, how you checked, error rate, and the kind of case it gets wrong.
 
-I used several independent checks:
+I checked it in a few different ways:
 
 1. **Dataset reconciliation:** 12,528 raw rows reconcile to **11,875 unique tickets** after **653 duplicate rows** are removed.
 2. **17 automated validation checks:** the cleaning, timestamps, CSAT, SLA, repeat-contact, refund and replacement calculations are programmatically reconciled.
@@ -37,7 +37,7 @@ I used several independent checks:
 4. **AI analyst tests:** automated tests cover grounding, schema handling, provider failover, local fallback and secret-leak checks.
 5. **Scenario checks:** repeat-contact, cancellation, SLA, greeting/capability and fallback scenarios are exercised in the test suite.
 
-Known error/limitation cases are explicit rather than hidden. **10 tickets with blank order IDs remain ambiguous** because the same customer bought the same SKU on the same date more than once. I deliberately leave those relationships unlinked rather than guessing.
+I am also keeping the known limitations visible instead of hiding them. **10 tickets with blank order IDs remain ambiguous** because the same customer bought the same SKU on the same date more than once. I deliberately leave those relationships unlinked rather than guessing.
 
 The biggest conceptual limitation is that the dataset has no unique root-cause/problem ID. Therefore, **same customer + same order within 30 days is a proxy for repeat contact, not proof that the underlying problem was identical**.
 
@@ -70,7 +70,7 @@ I left out:
 - Production authentication, deployment infrastructure and a full ticket-management workflow — useful for a platform product, but outside the five-hour task and not required to answer Priya's business question.
 - Broad sentiment/embedding infrastructure — it would add complexity without being necessary to identify the strongest operational themes in this dataset.
 
-I prioritized **reproducible metrics, the weekly digest, a fair leaderboard, validation, and a clear financial outcome** because those map directly to the client's stated ask.
+I focused on the things the brief actually asks for: **reproducible numbers, the weekly digest, a fair leaderboard, validation, and a clear business outcome**.
 
 ## Anything you built or found that nobody asked for?
 
@@ -83,16 +83,16 @@ Yes.
 
 ## What did you use AI for?
 
-I used AI coding/reasoning tools throughout development, including **Google Antigravity/Gemini** and **GLM 5.3 Flash through Freebuff AI**.
+I used **Google Antigravity/Gemini** and **GLM 5.3 Flash through Freebuff AI** while building and checking the project.
 
-AI helped with:
+They helped with:
 - exploring the data and proposing hypotheses;
 - generating and refactoring Python/TypeScript;
 - debugging the FastAPI/Next.js integration;
 - designing and testing the grounded AI analyst;
 - reviewing edge cases and producing the development log.
 
-I discarded or corrected several AI-generated approaches when the data did not support them, including:
+I also threw away or corrected approaches when the data did not support them. For example:
 - treating all legacy timestamps as UTC;
 - choosing an arbitrary order when multiple same-day orders existed;
 - using an LLM as the source of truth for business metrics;
@@ -111,11 +111,11 @@ PASTE_PUBLIC_GOOGLE_DRIVE_FOLDER_OR_FILE_LINK_HERE
 
 1. Run `python run.py` first. It is the source-of-truth deterministic pipeline and regenerates the analytical outputs from the raw files in `data/`.
 2. The primary business metric is **30-day same-order repeat contact**: **3,201 / 11,875 = 26.96%**, with a planning target of **22% at 650 tickets/week**.
-3. The web app is optional for presentation: start the FastAPI backend on port 8000 and the Next.js frontend on port 3000. The AI analyst is an explanation layer with provider fallback; it must not replace the deterministic metrics.
+3. The web app is mainly the presentation layer: start the FastAPI backend on port 8000 and the Next.js frontend on port 3000. The AI analyst is an explanation layer with provider fallback; it must not replace the deterministic metrics.
 
 ## Honest hours spent
 
-**REPLACE WITH YOUR ACTUAL HOURS SPENT. Do not submit the task-cap as a made-up figure.**
+**PUT YOUR ACTUAL HOURS HERE.**
 
 ## Github Repo Link
 
