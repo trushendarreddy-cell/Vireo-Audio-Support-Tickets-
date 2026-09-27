@@ -118,7 +118,7 @@ I tried or considered:
 
 I dropped these because they either gave me less reliable results or were not worth the extra time for this task.
 
-## 9. Final check — 27 Sep 2026
+## 9. Final checking
 
 Before finishing, I checked the project against the actual brief.
 
