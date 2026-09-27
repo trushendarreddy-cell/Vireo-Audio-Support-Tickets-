@@ -9,8 +9,8 @@ The primary business metric is **30-day same-order repeat contact rate**. The ve
 My operating target is to reduce that rate from **27.0% to 22.0%** at Vireo's stated planning volume of **650 tickets/week**. A 5 percentage-point reduction represents:
 
 - 650 × 52 / 4 = **8,450 tickets/quarter**
-- 8,450 × 5% = **422 fewer repeat contacts/quarter**
-- 422 × ₹290 blended contact cost = **₹122,380/quarter**, approximately **₹122,500/quarter**
+- 8,450 × 5% = **422.5 fewer repeat contacts/quarter** (about 423)
+- 8,450 × 5% × ₹290 = **₹122,525/quarter**
 
 This is a measurable operating target, not a claim that the tool itself has already produced the savings.
 
@@ -115,7 +115,7 @@ PASTE_PUBLIC_GOOGLE_DRIVE_FOLDER_OR_FILE_LINK_HERE
 
 ## Honest hours spent
 
-**5 hours**
+**REPLACE WITH YOUR ACTUAL HOURS SPENT. Do not submit the task-cap as a made-up figure.**
 
 ## Github Repo Link
 
