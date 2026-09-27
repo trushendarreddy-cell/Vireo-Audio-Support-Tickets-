@@ -1,6 +1,6 @@
-# Vireo Audio — Support Intelligence & Analytics Platform
+# Vireo Audio — Support Intelligence & Analytics
 
-A production-grade, zero-cost, deterministic local AI analytics platform and web application built for CX leadership (Priya Raman, Head of CX) at Vireo Audio.
+A lightweight, auditable support-intelligence tool built for CX leadership. The deterministic analytics pipeline is the source of truth; the optional AI analyst explains verified results and has a local fallback.
 
 Processes 18 months of customer support records (12,528 raw records; 11,875 unique tickets) to deliver an **Executive Dashboard**, a grounded **AI Support Analyst**, **Complaint Intelligence** with defect isolation, **Operations & Cost Analysis**, a **Fair Agent Leaderboard**, and a **Ticket Explorer**.
 
@@ -12,7 +12,7 @@ Processes 18 months of customer support records (12,528 raw records; 11,875 uniq
 * **Python 3.8+** (Tested on Python 3.10)
 * **Node.js 18+** & **npm** (for the web interface)
 
-### Option A: Run the Web Application (Localhost AI Product)
+### Option A: Run the Web Application
 1. **Start the FastAPI Backend:**
    ```bash
    pip install -r requirements.txt
@@ -24,12 +24,13 @@ Processes 18 months of customer support records (12,528 raw records; 11,875 uniq
    ```bash
    cd frontend
    npm install
+   npm run build
    npm run start -- -p 3000
    # (Or for development: npm run dev)
    ```
    *Web application runs at: `http://localhost:3000`*
 
-*(On Windows, you can also simply run `.\start.ps1` to launch both servers simultaneously).*
+*(On Windows, you can also use `.\start.ps1` after installing the prerequisites; the script builds the frontend before starting it.)*
 
 ### Option B: Run the Pure CLI Analysis Engine
 If you prefer running just the analytical pipeline without the web server:
@@ -53,7 +54,12 @@ python run.py
 
 ---
 
-## 3. Verified Analytical Baselines
+## 3. Business Outcome & Verified Analytical Baselines
+
+### Business goal
+Use the tool to reduce **30-day same-order repeat contacts from 27.0% to 22.0%** at Vireo's stated operating volume of **650 tickets/week**. That is a 5 percentage-point reduction, or about **422 fewer repeat contacts per quarter**. At the policy's blended contact cost of **₹290**, the modeled capacity/cost opportunity is **₹122,500 per quarter** (422 × ₹290 ≈ ₹122,380; using the exact 5% × 650 × 52/4 calculation gives ₹122,525). This is a target for operational improvement, not a claim that the tool itself has already caused the reduction.
+
+### Verified analytical baselines
 
 | Dimension / Metric | Authoritative Benchmark | Calculated System Value | Status |
 | :--- | :--- | :--- | :--- |
