@@ -75,7 +75,7 @@ export default function Home() {
   }>>([
     {
       query: "Why are repeat contacts high?",
-      answer: "Repeat contacts rise sharply from 16.08% at 14 days to 26.96% at 30 days. Unresolved delivery status, payment reconciliation lag, and Bluetooth connectivity re-contacts drive 3,201 total repeat tickets costing ₹858,520.",
+      answer: "Repeat contacts rise from 16.08% at 14 days to 26.96% at 30 days. There are 3,201 same-order repeat contacts in the 30-day window, with channel-specific handling costs totaling ₹858,520.",
       analysis: "Expanding the measurement window from 14 to 30 days captures 1,291 additional repeat contacts that standard 14-day tracking misses. In the 30-day window, 26.96% of all unique tickets involve a customer contacting support about the same order. Reducing this rate from 27% to 22% yields an estimated ₹122,500 in quarterly savings at 650 tickets/week.",
       evidence: [
         "14-day repeat contacts: 1,910 tickets (16.08%), handling cost: ₹520,560",
@@ -354,7 +354,7 @@ export default function Home() {
               11,875 <span className="font-normal text-zinc-400 text-[11px] font-sans">cleaned tickets</span>
             </div>
             <div className="text-[10px] text-zinc-400 flex items-center justify-between pt-0.5 border-t border-zinc-800">
-              <span>Pipeline: 0.75s</span>
+              <span>Core analysis: deterministic</span>
               <span className="font-mono text-zinc-400 font-medium">₹0.00 cost</span>
             </div>
           </div>
@@ -383,7 +383,7 @@ export default function Home() {
 
             <div className="flex items-center space-x-2 text-zinc-400 bg-zinc-900 px-2.5 py-1 rounded-md border border-zinc-800 text-[11px] font-mono">
               <span className="text-zinc-400">Dataset:</span>
-              <span className="font-semibold text-zinc-200">FY26 (18-Month)</span>
+              <span className="font-semibold text-zinc-200">18-Month baseline</span>
             </div>
           </div>
         </header>
@@ -401,7 +401,7 @@ export default function Home() {
                   <span className="text-[11px] font-semibold tracking-wider uppercase text-zinc-400">Executive Briefing</span>
                   <h1 className="text-2xl font-bold text-white mt-1 tracking-tight">Overview & Performance</h1>
                   <p className="text-xs text-zinc-400 mt-1 max-w-2xl leading-relaxed">
-                    18-month baseline analysis across 11,875 customer support tickets, 44 agents, and FY26 support policy standards.
+                    18-month baseline analysis across 11,875 customer support tickets and 44 agents, using the supplied support policy.
                   </p>
                 </div>
                 <div className="flex items-center space-x-2 text-xs">
@@ -481,13 +481,13 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* CRITICAL DEFECT: Primary Insight Box */}
+              {/* PRIMARY INSIGHT: CANCELLATION / ADDRESS EDITING PATTERN */}
               <div className="bg-[#141217] border border-rose-900/50 rounded-xl p-6 space-y-4 shadow-[0_4px_16px_rgba(0,0,0,0.4)]">
                 <div className="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-zinc-800/80 pb-3 gap-2">
                   <div>
                     <div className="flex items-center space-x-2">
                       <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-rose-500/10 text-rose-400 border border-rose-500/30">
-                        Critical Operational Defect
+                        Pattern Worth Checking
                       </span>
                       <span className="text-xs text-zinc-400">Checkout Flow</span>
                     </div>
@@ -506,9 +506,9 @@ export default function Home() {
                 </div>
 
                 <p className="text-xs text-zinc-300 leading-relaxed max-w-4xl">
-                  Customers report that the cancellation control is unavailable or that address editing fails immediately after checkout.
-                  Because the web/app button remains greyed out, customers are forced to contact support to intercept shipments before dispatch.
-                  Fixing this UI button will directly eliminate an estimated <strong className="text-white">20–30 inbound tickets per week</strong>.
+                  Customers report that the cancellation control is unavailable or that address editing fails after checkout.
+                  These tickets show a repeatable text pattern worth checking in the actual product flow.
+                  The ticket data does not prove the exact product cause or how many contacts a fix would prevent.
                 </p>
 
                 {/* Evidence Table */}
@@ -546,7 +546,7 @@ export default function Home() {
                     <span>View all 324 supporting tickets in Explorer</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
-                  <span className="text-[11px] text-zinc-400">Root cause: Frontend order lock status logic</span>
+                  <span className="text-[11px] text-zinc-400">Needs product-flow reproduction</span>
                 </div>
               </div>
 
@@ -561,7 +561,7 @@ export default function Home() {
                     </p>
                   </div>
                   <span className="text-xs font-mono font-medium text-zinc-400 bg-zinc-800 px-2 py-0.5 rounded border border-zinc-700/60">
-                    +1,291 missed contacts
+                    +1,291 additional contacts captured
                   </span>
                 </div>
 
@@ -672,7 +672,7 @@ export default function Home() {
                   </div>
                   <h3 className="text-base font-bold text-white">Ask the Support Knowledge Base</h3>
                   <p className="text-xs text-zinc-400 leading-relaxed">
-                    Query customer experience, SLA liability, repeat contact costs, and root causes. Responses are backed by 11,875 verified tickets.
+                    Query customer experience, SLA liability, repeat-contact metrics, and complaint patterns. Responses are backed by the verified analysis.
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-2 text-xs shrink-0">
@@ -814,7 +814,7 @@ export default function Home() {
                     {/* DETAILED ANALYSIS */}
                     {m.analysis && (
                       <div className="border-t border-zinc-800/80 pt-3">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1.5">ANALYSIS & ROOT CAUSE</span>
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1.5">ANALYSIS</span>
                         <p className="text-xs text-zinc-300 leading-relaxed whitespace-pre-line">
                           {m.analysis}
                         </p>
@@ -906,56 +906,52 @@ export default function Home() {
 
               {/* Top Row: Themes Bars & Weekly Movement */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Horizontal Themes Bars */}
+                {/* Complaint Themes */}
                 <div className="bg-[#12141c] border border-zinc-800/90 p-5 rounded-xl space-y-4 shadow-xs">
                   <div className="flex items-center justify-between">
                     <h3 className="text-sm font-bold text-white">Complaint Themes Distribution</h3>
-                    <span className="text-[11px] text-zinc-400 font-mono">11,875 Tickets</span>
+                    <span className="text-[11px] text-zinc-400 font-mono">Verified analysis</span>
                   </div>
                   <div className="space-y-3">
-                    {[
-                      { name: "Logistics", count: 2134, pct: 57.7 },
-                      { name: "Returns", count: 1197, pct: 23.8 },
-                      { name: "Product Defect", count: 955, pct: 13.2 },
-                      { name: "Billing", count: 1624, pct: 8.8 },
-                      { name: "Account Access", count: 316, pct: 5.2 }
-                    ].map(th => (
-                      <div key={th.name} className="space-y-1">
+                    {(complaints?.themes || []).slice(0, 5).map((th: any) => (
+                      <div key={th.theme_id} className="space-y-1">
                         <div className="flex justify-between text-xs">
-                          <span className="text-zinc-200 font-medium w-32">{th.name}</span>
-                          <div className="flex-1 mx-3 flex items-center">
-                            <div className="w-full bg-zinc-800 h-3 rounded-full overflow-hidden">
-                              <div className="bg-emerald-500 h-full rounded-full" style={{ width: `${Math.min(100, th.pct * 1.5)}%` }} />
-                            </div>
-                          </div>
-                          <span className="text-zinc-400 font-mono text-[11px] w-12 text-right">{th.pct}%</span>
+                          <span className="text-zinc-200 font-medium truncate pr-3">{th.name}</span>
+                          <span className="text-zinc-400 font-mono text-[11px] shrink-0">
+                            {th.count.toLocaleString()} · {th.share_pct}%
+                          </span>
+                        </div>
+                        <div className="w-full bg-zinc-800 h-2 rounded-full overflow-hidden">
+                          <div
+                            className="bg-emerald-500 h-full rounded-full"
+                            style={{ width: `${Math.min(100, Number(th.share_pct) * 2)}%` }}
+                          />
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                {/* Weekly Movement Line Sparkline */}
+                {/* Volume Context */}
                 <div className="bg-[#12141c] border border-zinc-800/90 p-5 rounded-xl space-y-4 flex flex-col justify-between shadow-xs">
                   <div className="flex justify-between items-baseline">
-                    <h3 className="text-sm font-bold text-white">Weekly Intake Trajectory</h3>
-                    <span className="text-[11px] text-zinc-400 font-mono">Tickets / week</span>
+                    <h3 className="text-sm font-bold text-white">Volume Context</h3>
+                    <span className="text-[11px] text-zinc-400 font-mono">Historical baseline</span>
                   </div>
-                  <div className="h-32 flex items-end justify-between px-2 pt-4 border-b border-zinc-800">
-                    {[47, 54, 59, 82, 67, 120, 140, 160, 174, 157, 231, 204, 186, 171, 203, 167, 199].map((val, i) => (
-                      <div key={i} className="flex flex-col items-center gap-1 flex-1">
-                        <div
-                          className="w-2.5 bg-emerald-500/80 rounded-t hover:bg-emerald-400 transition duration-150"
-                          style={{ height: `${(val / 231) * 90}px` }}
-                          title={`Week volume: ${val}`}
-                        />
+                  <div className="space-y-4">
+                    <div className="flex items-end justify-between border-b border-zinc-800 pb-4">
+                      <div>
+                        <div className="text-3xl font-bold text-white font-mono">~189</div>
+                        <div className="text-[11px] text-zinc-400">tickets / week historical average</div>
                       </div>
-                    ))}
-                  </div>
-                  <div className="flex justify-between text-[11px] text-zinc-400 font-mono">
-                    <span>Jan 2025</span>
-                    <span className="text-zinc-300 font-medium">Recent average: ~189 / wk</span>
-                    <span>Jun 2026</span>
+                      <div className="text-right">
+                        <div className="text-3xl font-bold text-white font-mono">650</div>
+                        <div className="text-[11px] text-zinc-400">tickets / week planning volume</div>
+                      </div>
+                    </div>
+                    <p className="text-xs text-zinc-400 leading-relaxed">
+                      The 650/week figure is the planning volume from the brief, not the historical average in this dataset.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -964,7 +960,7 @@ export default function Home() {
               <div className="bg-[#141217] border border-rose-900/50 rounded-xl p-6 space-y-4 shadow-md">
                 <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-2 border-b border-zinc-800 pb-3">
                   <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-rose-400">Target Operational Defect</span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-rose-400">Pattern to Investigate</span>
                     <h2 className="text-base font-bold text-white mt-0.5">CANCELLATION / ADDRESS EDITING FRICTION</h2>
                   </div>
                   <div className="flex items-center space-x-3">
